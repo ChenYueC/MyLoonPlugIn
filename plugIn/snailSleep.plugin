@@ -1,0 +1,20 @@
+#!name=蜗牛睡眠
+
+#!desc=蜗牛睡眠解锁会员
+
+#!homepage=https://www.cyue.top
+
+#!author=ChenYue
+
+#!icon=
+
+
+[Script]
+#！签到参数获取
+http-response ^https?:\/\/snailsleep.net\/snail\/v\d\/profile\/get.+ script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/snailSleep/snailSleep.js, requires-body=true, timeout=10, tag=蜗牛睡眠解锁会员
+
+#！115签到
+
+[MITM]
+hostname = snailsleep.net
+

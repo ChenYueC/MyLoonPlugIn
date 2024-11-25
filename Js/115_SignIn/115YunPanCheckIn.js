@@ -1,5 +1,5 @@
 let url = "https://proapi.115.com/ios/2.0/user/points_sign";
-let headers = $persistentStore.read('115PanCookie');
+let headers = JSON.parse($persistentStore.read('115PanCookie'));
 let body = $persistentStore.read('115PanBody');
 
 if (headers === null && body === null){

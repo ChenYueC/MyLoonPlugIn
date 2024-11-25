@@ -6,14 +6,12 @@
 
 #!author=ChenYue
 
-#!icon=
+#!icon=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/f60c3ede9a5e11b01d0d7a73a285d3d98b1b8d2e/img/snailSleep.png
 
 
 [Script]
-#！签到参数获取
+#！蜗牛睡眠
 http-response ^https?:\/\/snailsleep.net\/snail\/v\d\/profile\/get.+ script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/snailSleep/snailSleep.js, requires-body=true, timeout=10, tag=蜗牛睡眠解锁会员
-
-#！115签到
 
 [MITM]
 hostname = snailsleep.net

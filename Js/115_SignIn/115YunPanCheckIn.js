@@ -1,7 +1,10 @@
 let url = "https://proapi.115.com/ios/2.0/user/points_sign";
 let headers = $persistentStore.read('115PanCookie');
+let body = $persistentStore.read('115PanBody');
 
-let body = $persistentStore.read('115PanBody')
+if (headers === null && body === null){
+    $notification.post("115CheckInScript","","未获取Cookie,请先手动签到获取!");
+}
 
 let params = {
     url:url,
@@ -25,12 +28,11 @@ setTimeout(() => {
         } else {
             let dictData = JSON.parse(data);
             if (dictData.state) {
-                $notification.post("115签到通知","",`每日签到成功，获得${dictData.data.points_num}枫叶\n已连续签到${dictData.data.continuous_day}天`);
+                $notification.post("115CheckInScript","",`每日签到成功，获得${dictData.data.points_num}枫叶\n已连续签到${dictData.data.continuous_day}天`);
             }else{
-                $notification.post("115签到通知","","签到失败，请检查cookie是否有效!");
+                $notification.post("115CheckInScript","","签到失败，请检查cookie是否有效!");
             }
             console.log("Response Status: " + response.status);
-            //console.log("Response Headers: " + JSON.stringify(response.headers));
             console.log("Response Body: " + data);
         }
         $done();

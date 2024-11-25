@@ -4,6 +4,7 @@ let body = $persistentStore.read('115PanBody');
 
 if (headers === null && body === null){
     $notification.post("115CheckInScript","","未获取Cookie,请先手动签到获取!");
+    $done();
 }
 
 let params = {

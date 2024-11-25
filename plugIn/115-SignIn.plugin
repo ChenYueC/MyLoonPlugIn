@@ -11,7 +11,7 @@
 
 [Script]
 #！签到参数获取
-http-response ^https:\/\/proapi.115.com\/ios\/2.0\/user\/points_sign script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/115_SignIn/getSignInData.js, requires-body=true, timeout=10, tag=115云盘签到cookie
+http-response ^https:\/\/proapi.115.com\/ios\/2.0\/user\/points_sign$ script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/115_SignIn/getSignInData.js, requires-body=true, timeout=10, tag=115云盘签到cookie
 
 #！115签到
 cron "0 0 9 * * *" script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/115_SignIn/115YunPanCheckIn.js, timeout=60, tag=115云盘签到

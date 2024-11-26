@@ -25,7 +25,7 @@ setTimeout(() => {
 
     $httpClient.post(params, function(errorMsg,response,data) {
         if (errorMsg) {
-            console.log(errormsg);
+            console.log(errorMsg);
         } else {
             let dictData = JSON.parse(data);
             if (dictData.state) {

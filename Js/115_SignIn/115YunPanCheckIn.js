@@ -2,7 +2,15 @@ let url = "https://proapi.115.com/ios/2.0/user/points_sign";
 let headers = JSON.parse($persistentStore.read('115PanCookie'));
 let body = $persistentStore.read('115PanBody');
 
-if (headers === null && body === null){
+function isEmpty(cont) {
+    if (cont == null) {
+        return true;
+    }
+    return typeof cont === "string" && cont.trim().length === 0;
+}
+
+
+if (isEmpty(headers) && isEmpty(body)){
     $notification.post("115CheckInScript","","未获取Cookie,请先手动签到获取!");
     $done();
 }
@@ -39,4 +47,5 @@ setTimeout(() => {
         $done();
     });
 }, delayInMilliseconds);
+
 

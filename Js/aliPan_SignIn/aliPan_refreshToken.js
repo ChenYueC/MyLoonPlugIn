@@ -7,16 +7,16 @@ function getCookie() {
             data = JSON.parse(data)
             console.log(data)
             let refreshToken = data.refresh_token
-            if (refreshToken) {
+            if (!isEmpty(refreshToken)) {
                 $persistentStore.write(aliYunPanRefreshTokenKey, refreshToken)
                 $notification.post('aliPanSignIn','','🎉成功获取阿里云盘refresh_token，可以关闭相应脚本')
             } else {
-                $done({})
                 $notification.post('aliPanSignIn','','❌获取阿里云盘token失败，请稍后再试')
+                $done({})
             }
         } catch (e) {
-            $done({})
             $notification.post('aliPanSignIn','','❌获取阿里云盘token失败')
+            $done({})
         }
     }
 }

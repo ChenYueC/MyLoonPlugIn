@@ -8,10 +8,10 @@ function getCookie() {
             console.log(data)
             let refreshToken = data.refresh_token
             console.log(refreshToken)
-            console.log(!isEmpty(refreshToken))
             if (!isEmpty(refreshToken)) {
-                $persistentStore.write(aliYunPanRefreshTokenKey, refreshToken)
+                $persistentStore.write('aliYunPanRefreshTokenKey', refreshToken)
                 $notification.post('aliPanSignIn','','🎉成功获取阿里云盘refresh_token，可以关闭相应脚本')
+                $done({})
             } else {
                 $notification.post('aliPanSignIn','','❌获取阿里云盘token失败，请稍后再试')
                 $done({})

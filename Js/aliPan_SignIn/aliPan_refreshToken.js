@@ -5,6 +5,7 @@ function getCookie() {
 
         try {
             data = JSON.parse(data)
+            console.log(data)
             let refreshToken = data.refresh_token
             if (refreshToken) {
                 $persistentStore.write(aliYunPanRefreshTokenKey, refreshToken)

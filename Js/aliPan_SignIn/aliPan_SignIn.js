@@ -31,7 +31,7 @@ function refreshToken() {
                     // 将新的 token 存储到持久化存储中
                     $persistentStore.write(tokenData.refresh_token, 'aliPanRefreshToken');
                     aliPanAccessToken = tokenData.access_token
-                    // $persistentStore.write(tokenData.access_token, 'aliPanAccessToken');
+                    $persistentStore.write(tokenData.access_token, 'aliPanAccessToken');
                     console.log(tokenData.access_token);
                     $notification.post('aliPanSignIn', '获取新token完成', '');
                     resolve();
@@ -47,8 +47,6 @@ function refreshToken() {
             }
         });
     });
-
-
 }
 
 
@@ -62,18 +60,20 @@ function aliPanSignIn() {
                 $notification.post('aliPanSignIn','','今日已经签到，无法重复签到～')
                 $done();
             }else {
+                console.log('进入')
                 let params = {
                     url: 'https://member.alipan.com/v1/activity/sign_in_list',
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: 'Bearer ' + aliPanAccessToken,
+                        // Authorization: 'Bearer ' + aliPanAccessToken,
+                        Authorization: 'Bearer '+ $persistentStore.read('aliPanAccessToken'),
                         "User-Agent": UserAgent
                     },
                     body: JSON.stringify({})
                 };
                 $httpClient.post(params, function (error, response, data) {
                     if (error) {
-                        console.log("获取新的 token 失败", error);
+                        console.log(error);
                         $notification.post('aliPanSignIn', '签到时出现错误！！！', '');
                         $done();
                     } else {
@@ -135,3 +135,5 @@ async function startCheckSign() {
     }
 
 }
+
+startCheckSign()

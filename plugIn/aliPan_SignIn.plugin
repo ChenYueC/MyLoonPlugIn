@@ -6,7 +6,7 @@
 
 [Script]
 # 阿里云盘签到
-cron "0 10 0 * * ?" script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/aliPan_SignIn/aliPan_SignIn.js, timeout=300, tag=阿里云盘签到
+cron "0 0 0 * * ?" script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/aliPan_SignIn/aliPan_SignIn.js, timeout=300, tag=阿里云盘签到
 
 # 首次使用获取刷新token
 http-request https:\/\/auth.alipan.com\/v2\/account\/token script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/aliPan_SignIn/aliPan_refreshToken.js, requires-body=true, timeout=10, tag=阿里云盘签到cookie

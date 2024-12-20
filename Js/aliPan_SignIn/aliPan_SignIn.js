@@ -24,7 +24,7 @@ function refreshToken() {
                 $done();
                 return;
             }
-
+            console.log('开始获取token');
             try {
                 let tokenData = JSON.parse(data);
                 if (tokenData && tokenData.access_token) {
@@ -33,7 +33,8 @@ function refreshToken() {
                     aliPanAccessToken = tokenData.access_token
                     $persistentStore.write(tokenData.access_token, 'aliPanAccessToken');
                     console.log(tokenData.access_token);
-                    $notification.post('aliPanSignIn', '获取新token完成', '');
+                    // $notification.post('aliPanSignIn', '获取token完成', '');
+                    console.log('获取token成功');
                     resolve();
                 } else {
                     $notification.post('aliPanSignIn', '获取新的 token 时出错', '');
@@ -52,21 +53,23 @@ function refreshToken() {
 
 function aliPanSignIn() {
     return new Promise((resolve) => {
-        const randomSeconds = Math.floor(Math.random() * 30) + 1;
+        const randomDelay = Math.floor(Math.random() * 30) + 1;
         const seconds = randomDelay * 1000;
 
+        console.log('开始签到！！！');
+        console.log('延时：',seconds ,'秒');
         setTimeout(() => {
             if (isTimeDate($persistentStore.read('checkSignDate'))) {
                 $notification.post('aliPanSignIn','','今日已经签到，无法重复签到～')
                 $done();
             }else {
-                console.log('进入')
+
                 let params = {
                     url: 'https://member.alipan.com/v1/activity/sign_in_list',
                     headers: {
                         "Content-Type": "application/json",
-                        // Authorization: 'Bearer ' + aliPanAccessToken,
-                        Authorization: 'Bearer '+ $persistentStore.read('aliPanAccessToken'),
+                        Authorization: 'Bearer ' + aliPanAccessToken,
+                        // Authorization: 'Bearer '+ $persistentStore.read('aliPanAccessToken'),
                         "User-Agent": UserAgent
                     },
                     body: JSON.stringify({})
@@ -82,13 +85,15 @@ function aliPanSignIn() {
                             if (jsonData.success) {
                                 const signInLogs = jsonData?.result?.signInLogs || [];
                                 let checkInDay = null;
-                                for (const statusDay of signInLogs) {
-                                    if (statusDay.status === "miss") {
+                                let rewardDescription = null
+                                for (const resultDayData of signInLogs) {
+                                    if (resultDayData.status === "miss") {
                                         break;
                                     }
-                                    checkInDay = statusDay.day;
+                                    checkInDay = resultDayData.day;
+                                    rewardDescription = resultDayData.reward.description
                                 }
-                                $notification.post('aliPanSignIn', `第${checkInDay}签到成功`, '');
+                                $notification.post('aliPanSignIn', `第${checkInDay}天签到成功！`, `奖励：${rewardDescription} 请手动领取！`);
                                 $persistentStore.write(currentDate, 'checkSignDate');
                                 resolve();
                             }

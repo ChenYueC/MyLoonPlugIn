@@ -1,5 +1,6 @@
 let UserAgent = "AliApp(AYSD/6.7.5) com.alicloud.smartdrive/6.7.5 Version/18.2 Channel/201200 Language/zh-Hans-CN /iOS Mobile/iPhone17,1"
 let currentDate = null
+let aliPanAccessToken = null
 function refreshToken() {
     // 请求获取新的 token
     let tokenUrl = 'https://auth.alipan.com/v2/account/token';
@@ -29,7 +30,8 @@ function refreshToken() {
             if (tokenData && tokenData.access_token) {
                 // 将新的 token 存储到持久化存储中
                 $persistentStore.write(tokenData.refresh_token, 'aliPanRefreshToken');
-                $persistentStore.write(tokenData.access_token, 'aliPanAccessToken');
+                aliPanAccessToken = tokenData.access_token
+                // $persistentStore.write(tokenData.access_token, 'aliPanAccessToken');
                 console.log(tokenData.access_token);
                 $notification.post('aliPanSignIn', '获取新token完成', '');
             } else {
@@ -56,7 +58,7 @@ function aliPanSignIn() {
             url: 'https://member.alipan.com/v1/activity/sign_in_list',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: $persistentStore.read('aliPanAccessToken'),
+                Authorization: 'Bearer ' + aliPanAccessToken,
                 "User-Agent": UserAgent
             },
             body: JSON.stringify({})

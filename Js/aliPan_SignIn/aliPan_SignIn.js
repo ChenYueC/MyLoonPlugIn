@@ -16,7 +16,7 @@ function refreshToken() {
                 refresh_token: $persistentStore.read('aliPanRefreshToken')
             })
         };
-
+        // 请求获取新的 token
         $httpClient.post(refreshParams, function (error, response, data) {
             if (error) {
                 console.log("获取新的 token 失败", error);
@@ -46,9 +46,8 @@ function refreshToken() {
                 $done();
             }
         });
-
     });
-    // 请求获取新的 token
+
 
 }
 
@@ -63,7 +62,6 @@ function aliPanSignIn() {
                 $notification.post('aliPanSignIn','','今日已经签到，无法重复签到～')
                 $done();
             }else {
-                refreshToken()
                 let params = {
                     url: 'https://member.alipan.com/v1/activity/sign_in_list',
                     headers: {
@@ -133,6 +131,7 @@ async function startCheckSign() {
     } else {
         await refreshToken()
         await aliPanSignIn()
+        $done();
     }
 
 }

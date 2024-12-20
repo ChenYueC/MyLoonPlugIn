@@ -57,10 +57,11 @@ function aliPanSignIn() {
         const seconds = randomDelay * 1000;
 
         console.log('开始签到！！！');
-        console.log('延时：',seconds ,'秒');
+        console.log(`延时：${randomDelay}秒`);
         setTimeout(() => {
             if (isTimeDate($persistentStore.read('checkSignDate'))) {
                 $notification.post('aliPanSignIn','','今日已经签到，无法重复签到～')
+                console.log('今日已签到，无需重复签到！');
                 $done();
             }else {
 

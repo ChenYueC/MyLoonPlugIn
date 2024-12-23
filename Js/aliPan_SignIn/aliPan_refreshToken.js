@@ -20,7 +20,10 @@ function getCookie() {
             $notification.post('aliPanSignIn','','❌获取阿里云盘token失败')
             $done({})
         }
+    }else {
+        $done({})
     }
+
 }
 function hasPath(url) {
     try {

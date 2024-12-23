@@ -87,13 +87,20 @@ function aliPanSignIn() {
                                 const signInLogs = jsonData?.result?.signInLogs || [];
                                 let checkInDay = null;
                                 let rewardDescription = null
+                                let pendingRewardDays = 0
                                 for (const resultDayData of signInLogs) {
                                     if (resultDayData.status === "miss") {
                                         break;
                                     }
+                                    if (isEmpty(resultDayData.reward.description) && isEmpty(resultDayData.reward.name)){
+                                        pendingRewardDays += 1
+
+                                    }
                                     checkInDay = resultDayData.day;
                                     rewardDescription = resultDayData.reward.description
                                 }
+                                console.log(checkInDay)
+                                console.log(rewardDescription)
                                 $notification.post('aliPanSignIn', `第${checkInDay}天签到成功！`, `奖励：${rewardDescription} 请手动领取！`);
                                 $persistentStore.write(currentDate, 'checkSignDate');
                                 resolve();
@@ -120,17 +127,20 @@ function isEmpty(cont) {
 }
 
 function isTimeDate(DateTime) {
-    const now = new Date(DateTime);
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
+    let nowDate = new Date();
 
-    currentDate = `${year}-${month}-${day}`;
-    return currentDate === DateTime;
+    // let year = nowDate.getFullYear();
+    // let month = nowDate.getMonth() + 1;
+    // let day = nowDate.getDate();
+    // let hours = nowDate.getHours();
+    currentDate = nowDate.toLocaleDateString()
+    // currentDate = `当前时间：${year}-${month}-${day}`
+    console.log(currentDate)
+    return DateTime === currentDate;
 }
 
 
-async function startCheckSign() {
+    async function startCheckSign() {
     if (isEmpty($persistentStore.read('aliPanRefreshToken'))) {
         $notification.post('aliPanSignIn', '', '请先手动打开阿里云盘获取refreshToken');
         $done();

@@ -100,8 +100,8 @@ function aliPanSignIn() {
                                     rewardDescription = resultDayData.reward.description
                                 }
                                 console.log(checkInDay)
-                                console.log(rewardDescription)
-                                $notification.post('aliPanSignIn', `第${checkInDay}天签到成功！`, `奖励：${rewardDescription} 请手动领取！`);
+                                console.log(pendingRewardDays)
+                                $notification.post('aliPanSignIn', `第${checkInDay}天签到成功！`, `你有${pendingRewardDays}天奖励未领取、请手动领取！`);
                                 $persistentStore.write(currentDate, 'checkSignDate');
                                 resolve();
                             }

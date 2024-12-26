@@ -2,6 +2,7 @@ function getCookie() {
     if (isEmpty($persistentStore.read('smzdmCookie'))){
         console.log(`开始获取cookie`)
         let data = $request.headers
+        console.log(data)
 
         try {
             data = JSON.parse(data)

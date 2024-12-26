@@ -3,7 +3,7 @@ function getCookie() {
         console.log(`开始获取cookie`)
         let data = $request.headers
         console.log(data)
-
+        console.log(typeof data)
         try {
             data = JSON.parse(data)
             console.log(data)

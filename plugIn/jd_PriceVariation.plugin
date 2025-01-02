@@ -1,0 +1,13 @@
+/*
+ * 比价数据来源于manmanbuy.com 慢慢买比价网
+ * 商品页点击详情查看价格浮动，最低价显示的是优惠抵扣后的价格
+ */
+
+ https://in.m.jd.com/product/graphext/
+
+ [Script]
+ # 京东比价
+ http-response ^https:\/\/in.m.jd.com\/product\/graphext\/(.*)$ script-path=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/master/Js/jdPriceVariation/jd_PriceVariation.js, requires-body=true, timeout=10, tag=京东比价
+
+ [MITM]
+ hostname = in.m.jd.com

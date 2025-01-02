@@ -2,7 +2,7 @@
 #!desc=京东比价，显示半年左右历史价格浮点，点击详情查看
 #!homepage=https://www.cyue.top
 #!author=Chenyue
-#!icon=https://raw.githubusercontent.com/deezertidal/private/main/icons/jd.png
+#!icon=https://raw.githubusercontent.com/ChenYueC/MyLoonPlugIn/refs/heads/master/img/jd.png
 
  [Script]
  # 京东比价
